@@ -1,0 +1,4 @@
+/target
+src/file_manager.rs
+src/interactive.rs
+/output

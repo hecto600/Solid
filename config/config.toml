@@ -1,0 +1,4 @@
+[rgb]
+bits_qty = 4 
+net_type = "cross"
+cut_style = "a"
