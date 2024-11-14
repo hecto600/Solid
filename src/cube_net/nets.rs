@@ -1,9 +1,19 @@
-use super::cross::cross_style;
+use super::{
+    cross::{cross_style, Cross},
+    ladder::Ladder,
+};
 use crate::{
     cube_net::ladder::ladder_style,
     initialization::configuration::Config,
     space::color_space::{Color, OuterPlanes},
 };
+pub enum NetShapeAndFx {
+    Cross(Cross),
+    CrossFill(Cross),
+    Ladder(Ladder),
+    LadderFill(Ladder),
+}
+
 pub type Plane = Vec<Vec<Color>>;
 pub type Matrix = Vec<Vec<Option<Vec<Vec<Color>>>>>;
 

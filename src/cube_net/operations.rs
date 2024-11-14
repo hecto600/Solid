@@ -70,67 +70,87 @@ pub fn plane_rotate_90ccw(plane: &mut Vec<Vec<Color>>) {
     }
     *plane = rotated;
 }
-pub fn plane_fill_top_left(target: &mut Plane, right: &Plane, below: &Plane) {
-    let size = target.len();
-    for line in 0..size {
-        for column in 0..size {
+pub fn plane_fill_top_left(plane_size: usize, right: &Plane, below: &Plane) -> Plane {
+    let mut fill_plane: Plane = vec![vec![Color::new(0, 0, 0); plane_size]; plane_size];
+    for line in 0..plane_size {
+        for column in 0..plane_size {
             if line < column {
-                target[line][column] = right[line][0].clone();
+                fill_plane[line][column] = right[line][0].clone();
             } else {
-                target[line][column] = below[0][column].clone();
+                fill_plane[line][column] = below[0][column].clone();
             }
         }
     }
+    fill_plane
 }
-pub fn plane_fill_top_right(target: &mut Plane, left: &Plane, below: &Plane) {
-    let size = target.len();
-    for line in 0..size {
-        for column in 0..size {
-            if line + column < size {
-                target[line][column] = left[line][size - 1].clone();
+pub fn plane_fill_top_right(plane_size: usize, left: &Plane, below: &Plane) -> Plane {
+    let mut fill_plane: Plane = vec![vec![Color::new(0, 0, 0); plane_size]; plane_size];
+    for line in 0..plane_size {
+        for column in 0..plane_size {
+            if line + column < plane_size {
+                fill_plane[line][column] = left[line][plane_size - 1].clone();
             } else {
-                target[line][column] = below[0][column].clone();
+                fill_plane[line][column] = below[0][column].clone();
             }
         }
     }
+    fill_plane
 }
-pub fn plane_fill_bottom_left(target: &mut Plane, above: &Plane, right: &Plane) {
-    let size = target.len();
-    for line in 0..size {
-        for column in 0..size {
-            if line + column < size {
-                target[line][column] = above[size - 1][column].clone();
+pub fn plane_fill_bottom_left(plane_size: usize, above: &Plane, right: &Plane) -> Plane {
+    let mut fill_plane: Plane = vec![vec![Color::new(0, 0, 0); plane_size]; plane_size];
+    for line in 0..plane_size {
+        for column in 0..plane_size {
+            if line + column < plane_size {
+                fill_plane[line][column] = above[plane_size - 1][column].clone();
             } else {
-                target[line][column] = right[line][0].clone();
+                fill_plane[line][column] = right[line][0].clone();
             }
         }
     }
+    fill_plane
 }
-pub fn plane_fill_bottom_right(target: &mut Plane, above: &Plane, left: &Plane) {
-    let size = target.len();
-    for line in 0..size {
-        for column in 0..size {
+pub fn plane_fill_bottom_right(plane_size: usize, above: &Plane, left: &Plane) -> Plane {
+    let mut fill_plane: Plane = vec![vec![Color::new(0, 0, 0); plane_size]; plane_size];
+    for line in 0..plane_size {
+        for column in 0..plane_size {
             if line < column {
-                target[line][column] = above[size - 1][column].clone();
+                fill_plane[line][column] = above[plane_size - 1][column].clone();
             } else {
-                target[line][column] = left[line][size - 1].clone();
+                fill_plane[line][column] = left[line][plane_size - 1].clone();
             }
         }
     }
+    fill_plane
 }
-pub fn plane_fill_left(target: &mut Plane, right: &Plane) {
-    let size = target.len();
-    for line in 0..size {
-        for column in 0..size {
-            target[line][column] = right[line][0].clone();
+pub fn plane_fill_left(plane_size: usize, right: &Plane) -> Plane {
+    let mut fill_plane: Plane = vec![vec![Color::new(0, 0, 0); plane_size]; plane_size];
+
+    for line in 0..plane_size {
+        for column in 0..plane_size {
+            fill_plane[line][column] = right[line][0].clone();
         }
     }
+    fill_plane
 }
-pub fn plane_fill_right(target: &mut Plane, left: &Plane) {
-    let size = target.len();
-    for line in 0..size {
-        for column in 0..size {
-            target[line][column] = left[line][size - 1].clone();
+pub fn plane_fill_right(plane_size: usize, left: &Plane) -> Plane {
+    let mut fill_plane: Plane = vec![vec![Color::new(0, 0, 0); plane_size]; plane_size];
+    for line in 0..plane_size {
+        for column in 0..plane_size {
+            fill_plane[line][column] = left[line][plane_size - 1].clone();
         }
     }
+    fill_plane
+}
+
+pub fn meta_fill_top_right(plane_size: usize, left: &Plane) -> Plane {
+    let color = left[0][plane_size - 1].clone();
+    let fill_plane: Plane =
+        vec![vec![Color::new(color.red, color.green, color.blue); plane_size]; plane_size];
+    fill_plane
+}
+pub fn meta_fill_bottom_left(plane_size: usize, above: &Plane) -> Plane {
+    let color = above[plane_size - 1][0].clone();
+    let fill_plane: Plane =
+        vec![vec![Color::new(color.red, color.green, color.blue); plane_size]; plane_size];
+    fill_plane
 }

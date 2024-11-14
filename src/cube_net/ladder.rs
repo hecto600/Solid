@@ -1,17 +1,17 @@
-use crate::{initialization::configuration::Config, space::color_space::OuterPlanes};
-
 use super::{
-    nets::{Matrix, Plane},
+    nets::{Matrix, NetShapeAndFx, Plane},
     operations::*,
     render_net::render_matrix,
 };
+use crate::{initialization::configuration::Config, space::color_space::OuterPlanes};
+
 pub struct Ladder {
-    top_left: Plane,
-    top_right: Plane,
-    mid_left: Plane,
-    mid_right: Plane,
-    bottom_left: Plane,
-    bottom_right: Plane,
+    pub top_left: Plane,
+    pub top_right: Plane,
+    pub mid_left: Plane,
+    pub mid_right: Plane,
+    pub bottom_left: Plane,
+    pub bottom_right: Plane,
 }
 
 impl Ladder {
@@ -35,6 +35,8 @@ impl Ladder {
 }
 
 pub fn ladder_style(outer_planes: &OuterPlanes, config: &Config) {
+    let mut display_matrix: Matrix = vec![vec![None; 4]; 3];
+    let plane_size: usize = outer_planes.size;
     match config.rgb.cut_style.as_str() {
         "a" => {
             let mut ladder = Ladder::new(
@@ -50,9 +52,17 @@ pub fn ladder_style(outer_planes: &OuterPlanes, config: &Config) {
             plane_transpose_reversed(&mut ladder.bottom_left);
             plane_transpose_reversed(&mut ladder.bottom_right);
             if config.rgb.flag_fill {
-                println!("Fill effect not availble to ladder cut yet.");
+                render_matrix(
+                    &mut display_matrix,
+                    plane_size,
+                    NetShapeAndFx::LadderFill(ladder),
+                )
             } else {
-                ladder_format(ladder);
+                render_matrix(
+                    &mut display_matrix,
+                    plane_size,
+                    super::nets::NetShapeAndFx::Ladder(ladder),
+                )
             }
         }
         "b" => {
@@ -71,25 +81,21 @@ pub fn ladder_style(outer_planes: &OuterPlanes, config: &Config) {
             plane_transpose(&mut ladder.bottom_right);
 
             if config.rgb.flag_fill {
-                println!("Fill effect not availble to ladder cut yet.");
+                render_matrix(
+                    &mut display_matrix,
+                    plane_size,
+                    NetShapeAndFx::LadderFill(ladder),
+                )
             } else {
-                ladder_format(ladder);
+                render_matrix(
+                    &mut display_matrix,
+                    plane_size,
+                    NetShapeAndFx::Ladder(ladder),
+                );
             }
         }
         _ => {
             println!("ladder.rs: not a valid ladder cut");
         }
     }
-}
-
-pub fn ladder_format(ladder: Ladder) {
-    let mut display_matrix: Matrix = vec![vec![None; 4]; 3];
-    let plane_size: usize = ladder.top_left.len();
-    display_matrix[0][0] = Some(ladder.top_left);
-    display_matrix[0][1] = Some(ladder.top_right);
-    display_matrix[1][1] = Some(ladder.mid_left);
-    display_matrix[1][2] = Some(ladder.mid_right);
-    display_matrix[2][2] = Some(ladder.bottom_left);
-    display_matrix[2][3] = Some(ladder.bottom_right);
-    render_matrix(&display_matrix, plane_size);
 }
