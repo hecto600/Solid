@@ -16,7 +16,7 @@ cargo build --release
 
 ```
 ## Usage
-`solid [command][flag][options]...`
+`solid [command][flag][options...]`
 
 ### Commands
 #### rgb
