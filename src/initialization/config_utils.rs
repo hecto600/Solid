@@ -1,5 +1,5 @@
 pub const INFO_HELP: &str = r#"
-Usage: solid [command][flag][options]...
+Usage: solid [command][flag][options...]
 
 Commands
 rgb
