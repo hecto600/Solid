@@ -71,7 +71,6 @@ pub fn render_matrix(block_matrix: &mut Matrix, plane_size: usize, net_shape: Ne
     match net_shape {
         NetShapeAndFx::Cross(cross) => {
             matrix_cross(&cross, block_matrix);
-            println!("Done");
         }
         NetShapeAndFx::CrossFill(cross_fill) => {
             matrix_cross(&cross_fill, block_matrix);
