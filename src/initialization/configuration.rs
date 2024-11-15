@@ -108,7 +108,7 @@ fn tokenize(args: Vec<String>) -> Result<Vec<Token>, String> {
         } else if key_value_options.contains(&word.as_str()) {
             if let Some(value) = words.peek() {
                 tokens.push(Token::KeyValueOption(word.to_string(), value.to_string()));
-                words.next(); // Consume the value
+                words.next();
             } else {
                 return Err(format!("Option '{}' requires a value", word));
             }
@@ -140,14 +140,14 @@ fn analyze_syntax(tokens: Vec<Token>) -> Result<Config, String> {
                         if tokens.len() > 1 {
                             return Err(format!("-v can't have other arguments"));
                         }
-                        println!("{}", config_utils::INFO_HELP);
+                        config_utils::info_help();
                         cfg.show_info_on = true;
                     }
                     "-v" => {
                         if tokens.len() > 1 {
                             return Err(format!("-v can't have other arguments"));
                         }
-                        println!("{}", config_utils::INFO_VERSION);
+                        config_utils::info_version();
                         cfg.show_info_on = true;
                     }
                     "-f" => cfg.rgb.flag_fill = true,
@@ -221,7 +221,6 @@ pub fn start(mut args: Vec<String>) {
         match config.rgb.bits_qty {
             1..=8 => {
                 rgb_net_render(&config);
-                // render_fill(&rgbspace.key_planes);
             }
 
             _ => {
