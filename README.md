@@ -1,10 +1,20 @@
-
 # Solid
 The software unfold the rgb cube in a specific net and display it on terminal. 
 Color amount, net shape, and cut orientation are configurable. Alternatively,
-solid can show some HSL colors with hexcode. 
-![rgbspace](./imgs/cube_fill_effect.png)
-This project was made to learn more about colors and Rust.
+solid can show colors organized by HSL parameters with hexcode. 
+
+## Demonstration
+Ladder:\
+![2b_ladder](./content/2b_ladder.gif)
+
+Cross:\
+![2b_cross](./content/2b_cross.gif)
+
+Apply fill effect:\
+![2b_cross_fill](./content/2b_cross_fill.gif)
+
+Add more colors:\
+![7b_cross_fill_img](./content/b7_cube_fill.png)
 
 ## Installation
 ### Built binaries
@@ -53,3 +63,6 @@ Shows a 2d mapping rgb cube, with differents nets.
 Shows colors with Hue, saturation and lightness parameters.
 
 **Example**: `solid hsl`
+
+---
+This project was made to learn more about colors and Rust.
